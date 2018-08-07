@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace mklink_portable_ui
 {
+	
+
 	static class Program
 	{
 		/// <summary>
@@ -16,7 +18,8 @@ namespace mklink_portable_ui
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			Global.CreateForms();
+			Application.Run(Global.gformMain);
 		}
 	}
 }
