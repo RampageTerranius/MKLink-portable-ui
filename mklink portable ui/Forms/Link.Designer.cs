@@ -82,6 +82,7 @@
 			this.btnGo.TabIndex = 4;
 			this.btnGo.Text = "Go";
 			this.btnGo.UseVisualStyleBackColor = true;
+			this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
 			// 
 			// tboxTarget
 			// 
@@ -124,9 +125,10 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.Name = "frmLink";
-			this.Text = ";";
+			this.ShowIcon = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
-			this.Shown += new System.EventHandler(this.OnShown);
+			this.VisibleChanged += new System.EventHandler(this.OnVisibilityChange);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -143,4 +145,6 @@
 		private System.Windows.Forms.TextBox tboxLinkLocation;
 		private System.Windows.Forms.Label lblMode;
 	}
+
+
 }

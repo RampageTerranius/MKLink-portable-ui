@@ -24,9 +24,32 @@ namespace mklink_portable_ui
 			Global.gformMain.Show();
 		}
 
-		private void OnShown(object sender, EventArgs e)
+		private void btnGo_Click(object sender, EventArgs e)
 		{
-			lblMode.Text = Global.mode;
+
+		}
+
+		private void OnVisibilityChange(object sender, EventArgs e)
+		{
+			if (this.Visible)
+				switch (Global.mode)
+				{
+					case "SymLink":
+						lblMode.Text = "Symbolic Link";
+						break;
+
+					case "DirSymLink":
+						lblMode.Text = "Directory Symbolic Link";
+						break;
+
+					case "HardLink":
+						lblMode.Text = "Hard Link";
+						break;
+
+					case "DirJunk":
+						lblMode.Text = "Directory Junction";
+						break;
+				}
 		}
 	}
 }

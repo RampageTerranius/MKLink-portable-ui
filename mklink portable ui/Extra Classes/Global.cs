@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace mklink_portable_ui
 {
+	//used to store global variables and functions used between all forms
 	public static class Global
 	{
 		public static string mode = "";
@@ -20,26 +21,41 @@ namespace mklink_portable_ui
 			gformLink = new frmLink();
 		}
 
-		public static void Reset()
-		{
-			mode = "";			
-		}
-
+		//runs the command 
 		public static void RunCMD(string argCMD)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
 			startInfo.FileName = "cmd.exe";
-			startInfo.Arguments = "/C " + argCMD;
+
+			string type = "";
+
+			switch(Global.mode)
+			{
+				case "DirSymLink":
+					type = " /d ";
+					break;
+
+				case "HardLink":
+					type = " /h ";
+					break;
+
+				case "DirJunk":
+					type = " /j ";
+					break;
+			}
+
+			startInfo.Arguments = "/c " + type + argCMD;
 			process.StartInfo = startInfo;
 			process.Start();
 
 			bool wait = true;
-			while (wait)			
+			while (wait)
 				wait = process.WaitForExit(1000);
 
-			if (process.ExitCode == 0)			
-				MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);			
+			//show if command succeeded
+			if (process.ExitCode == 0)
+				MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
 			else if (process.ExitCode == 1)
 				MessageBox.Show("Command Failed!", "Info", MessageBoxButtons.OK);
 		}
