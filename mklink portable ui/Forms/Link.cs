@@ -17,6 +17,7 @@ namespace mklink_portable_ui
 			InitializeComponent();
 		}
 
+		//cancels closing the program and sends control back to the menu
 		private void OnClosing(object sender, FormClosingEventArgs e)
 		{
 			e.Cancel = true;
@@ -24,13 +25,19 @@ namespace mklink_portable_ui
 			Global.gformMain.Show();
 		}
 
+		//on Go button press
 		private void btnGo_Click(object sender, EventArgs e)
 		{
-
+			if (tboxLinkLocation.Text != "" && tboxTarget.Text != "")
+				Global.RunCMD(tboxLinkLocation.Text + " " + tboxTarget.Text);
+			else
+				MessageBox.Show("Please enter a value into both Location ANd Target", "Error", MessageBoxButtons.OK);
 		}
 
+		//used for when this form is opened
 		private void OnVisibilityChange(object sender, EventArgs e)
 		{
+			//setting the text on lblMode depending upon the current mode we are in
 			if (this.Visible)
 				switch (Global.mode)
 				{

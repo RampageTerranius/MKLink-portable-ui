@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace mklink_portable_ui
 {
@@ -21,39 +22,44 @@ namespace mklink_portable_ui
 			gformLink = new frmLink();
 		}
 
-		//runs the command 
+		//used to run mklink
 		public static void RunCMD(string argCMD)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-			startInfo.FileName = "cmd.exe";
+			startInfo.FileName = "cmd.exe";//the process we will be starting
 
-			string type = "";
-
+			//preparing any extra parameters required for the process
+			string type = "";						
 			switch(Global.mode)
 			{
 				case "DirSymLink":
-					type = " /d ";
+					type = " /D ";
 					break;
 
 				case "HardLink":
-					type = " /h ";
+					type = " /H ";
 					break;
 
 				case "DirJunk":
-					type = " /j ";
+					type = " /J ";
 					break;
 			}
 
-			startInfo.Arguments = "/c " + type + argCMD;
+			startInfo.Arguments = "/c mklink "+ type + argCMD;
 			process.StartInfo = startInfo;
 			process.Start();
 
+			//wait until external process has exited
 			bool wait = true;
 			while (wait)
-				wait = process.WaitForExit(1000);
+			{
+				System.Threading.Thread.Sleep(1000);
+				if (process.HasExited)
+					wait = false;
+			}
 
-			//show if command succeeded
+			//show if process succeeded
 			if (process.ExitCode == 0)
 				MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
 			else if (process.ExitCode == 1)
