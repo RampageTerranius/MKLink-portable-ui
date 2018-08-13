@@ -29,9 +29,9 @@ namespace mklink_portable_ui
 		private void btnGo_Click(object sender, EventArgs e)
 		{
 			if (tboxLinkLocation.Text != "" && tboxTarget.Text != "")
-				Global.RunCMD(tboxLinkLocation.Text + " " + tboxTarget.Text);
+				Global.RunCMD(tboxLinkLocation.Text, tboxTarget.Text);
 			else
-				MessageBox.Show("Please enter a value into both Location ANd Target", "Error", MessageBoxButtons.OK);
+				MessageBox.Show("Please enter a value into both Location AND Target", "Error", MessageBoxButtons.OK);
 		}
 
 		//used for when this form is opened
@@ -57,6 +57,12 @@ namespace mklink_portable_ui
 						lblMode.Text = "Directory Junction";
 						break;
 				}
+		}
+
+		private void btnBackToMenu_Click(object sender, EventArgs e)
+		{
+			//hand control over to OnClosing
+			this.Close();
 		}
 	}
 }

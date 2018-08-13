@@ -36,6 +36,7 @@
 			this.tboxTarget = new System.Windows.Forms.TextBox();
 			this.tboxLinkLocation = new System.Windows.Forms.TextBox();
 			this.lblMode = new System.Windows.Forms.Label();
+			this.btnBackToMenu = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// lblTarget
@@ -109,11 +110,22 @@
 			this.lblMode.Text = "ModeText";
 			this.lblMode.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
+			// btnBackToMenu
+			// 
+			this.btnBackToMenu.Location = new System.Drawing.Point(694, 98);
+			this.btnBackToMenu.Name = "btnBackToMenu";
+			this.btnBackToMenu.Size = new System.Drawing.Size(94, 23);
+			this.btnBackToMenu.TabIndex = 8;
+			this.btnBackToMenu.Text = "Back to Menu";
+			this.btnBackToMenu.UseVisualStyleBackColor = true;
+			this.btnBackToMenu.Click += new System.EventHandler(this.btnBackToMenu_Click);
+			// 
 			// frmLink
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 133);
+			this.Controls.Add(this.btnBackToMenu);
 			this.Controls.Add(this.lblMode);
 			this.Controls.Add(this.tboxLinkLocation);
 			this.Controls.Add(this.tboxTarget);
@@ -144,6 +156,7 @@
 		private System.Windows.Forms.TextBox tboxTarget;
 		private System.Windows.Forms.TextBox tboxLinkLocation;
 		private System.Windows.Forms.Label lblMode;
+		private System.Windows.Forms.Button btnBackToMenu;
 	}
 
 

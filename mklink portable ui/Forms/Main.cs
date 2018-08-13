@@ -72,7 +72,7 @@ namespace mklink_portable_ui
 			{
 				WindowsPrincipal principal = new WindowsPrincipal(identity);
 				if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-					MessageBox.Show("Warning!\nThis program may not function correctly without adimistrator rights!", "Warning", MessageBoxButtons.OK);
+					MessageBox.Show("Warning!\nThis program may not function correctly without administrator rights!", "Warning", MessageBoxButtons.OK);
 			}
 		}
 	}

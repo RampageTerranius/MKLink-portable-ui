@@ -14,7 +14,7 @@ namespace mklink_portable_ui
 		public static string mode = "";
 
 		public static Form gformMain;
-		public static Form gformLink;
+		public static Form gformLink;		
 
 		public static void CreateForms()
 		{
@@ -23,7 +23,7 @@ namespace mklink_portable_ui
 		}
 
 		//used to run mklink
-		public static void RunCMD(string argCMD)
+		public static void RunCMD(string location, string target)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -46,7 +46,7 @@ namespace mklink_portable_ui
 					break;
 			}
 
-			startInfo.Arguments = "/c mklink "+ type + argCMD;
+			startInfo.Arguments = "/c mklink "+ type + location + " " + target;
 			process.StartInfo = startInfo;
 			process.Start();
 
