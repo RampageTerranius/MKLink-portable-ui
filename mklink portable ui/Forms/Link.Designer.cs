@@ -37,6 +37,7 @@
 			this.tboxLinkLocation = new System.Windows.Forms.TextBox();
 			this.lblMode = new System.Windows.Forms.Label();
 			this.btnBackToMenu = new System.Windows.Forms.Button();
+			this.cboxShowCMD = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// lblTarget
@@ -120,11 +121,25 @@
 			this.btnBackToMenu.UseVisualStyleBackColor = true;
 			this.btnBackToMenu.Click += new System.EventHandler(this.btnBackToMenu_Click);
 			// 
+			// cboxShowCMD
+			// 
+			this.cboxShowCMD.AutoSize = true;
+			this.cboxShowCMD.Checked = true;
+			this.cboxShowCMD.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cboxShowCMD.Location = new System.Drawing.Point(96, 100);
+			this.cboxShowCMD.Name = "cboxShowCMD";
+			this.cboxShowCMD.Size = new System.Drawing.Size(80, 17);
+			this.cboxShowCMD.TabIndex = 9;
+			this.cboxShowCMD.Text = "Show CMD";
+			this.cboxShowCMD.UseVisualStyleBackColor = true;
+			this.cboxShowCMD.CheckedChanged += new System.EventHandler(this.cboxShowCMD_CheckedChanged);
+			// 
 			// frmLink
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 133);
+			this.Controls.Add(this.cboxShowCMD);
 			this.Controls.Add(this.btnBackToMenu);
 			this.Controls.Add(this.lblMode);
 			this.Controls.Add(this.tboxLinkLocation);
@@ -157,6 +172,7 @@
 		private System.Windows.Forms.TextBox tboxLinkLocation;
 		private System.Windows.Forms.Label lblMode;
 		private System.Windows.Forms.Button btnBackToMenu;
+		private System.Windows.Forms.CheckBox cboxShowCMD;
 	}
 
 

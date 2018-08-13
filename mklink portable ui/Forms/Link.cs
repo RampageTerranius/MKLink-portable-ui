@@ -64,5 +64,15 @@ namespace mklink_portable_ui
 			//hand control over to OnClosing
 			this.Close();
 		}
+
+		private void cboxShowCMD_CheckedChanged(object sender, EventArgs e)
+		{
+			if (cboxShowCMD.Checked)			
+				Global.showCMD = true;	
+			else
+				Global.showCMD = false;
+
+
+		}
 	}
 }

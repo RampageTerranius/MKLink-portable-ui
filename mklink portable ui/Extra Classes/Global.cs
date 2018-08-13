@@ -14,12 +14,14 @@ namespace mklink_portable_ui
 		public static string mode = "";
 
 		public static Form gformMain;
-		public static Form gformLink;		
+		public static Form gformLink;
+		public static bool showCMD;
 
 		public static void CreateForms()
 		{
 			gformMain = new frmMenu();
 			gformLink = new frmLink();
+			showCMD = true;
 		}
 
 		//used to run mklink
@@ -46,8 +48,25 @@ namespace mklink_portable_ui
 					break;
 			}
 
-			startInfo.Arguments = "/c mklink "+ type + location + " " + target;
+			string arg;
+
+			if (Global.showCMD)
+				arg = "/k mklink ";
+			else
+				arg = "/c mklink ";
+
+			arg += type + location + " " + target;
+			startInfo.Arguments = arg;  
 			process.StartInfo = startInfo;
+
+			if (showCMD)
+				process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+			
+			else			
+				process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+			
+				
+
 			process.Start();
 
 			//wait until external process has exited
@@ -60,10 +79,13 @@ namespace mklink_portable_ui
 			}
 
 			//show if process succeeded
-			if (process.ExitCode == 0)
-				MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
-			else if (process.ExitCode == 1)
-				MessageBox.Show("Command Failed!", "Info", MessageBoxButtons.OK);
+			if (!Global.showCMD)
+			{
+				if (process.ExitCode == 0)
+					MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
+				else if (process.ExitCode == 1)
+					MessageBox.Show("Command Failed!", "Info", MessageBoxButtons.OK);
+			}
 		}
 	}
 }
