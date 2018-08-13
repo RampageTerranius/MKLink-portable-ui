@@ -76,7 +76,7 @@ namespace mklink_portable_ui
 			{
 				WindowsPrincipal principal = new WindowsPrincipal(identity);
 				if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-					MessageBox.Show("Warning!\nThis program may not function correctly without administrator rights!", "Warning", MessageBoxButtons.OK);
+					MessageBox.Show("This program may not function correctly without administrator rights!\nPlease change to an administrator account or make sure your current account has permission to create symbolic links.", "Warning", MessageBoxButtons.OK);
 			}
 		}
 	}
