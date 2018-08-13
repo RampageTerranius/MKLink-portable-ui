@@ -16,6 +16,7 @@ namespace mklink_portable_ui
 		public frmMenu()
 		{
 			InitializeComponent();
+			Global.LoadSettings();			
 		}
 
 		private void btnSymLink_Click(object sender, EventArgs e)
@@ -61,7 +62,10 @@ namespace mklink_portable_ui
 
 		private void OnClose(object sender, FormClosedEventArgs e)
 		{
-			//make sure the link form closes when we clsoe the program as well
+			//save our settigns file BEFORE closing the app
+			Global.SaveSettings();
+
+			//make sure the link form closes when we close the program as well
 			Global.gformLink.Close();		
 		}
 

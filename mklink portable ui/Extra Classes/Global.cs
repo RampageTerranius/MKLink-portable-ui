@@ -15,6 +15,7 @@ namespace mklink_portable_ui
 
 		public static Form gformMain;
 		public static Form gformLink;
+
 		public static bool showCMD;
 
 		public static void CreateForms()
@@ -22,6 +23,51 @@ namespace mklink_portable_ui
 			gformMain = new frmMenu();
 			gformLink = new frmLink();
 			showCMD = true;
+		}
+
+		//saving settings to ini as needed
+		public static void SaveSettings()
+		{
+			
+			if (File.Exists("settings.ini"))
+			{
+				//setting file exists, load it to memory, edit the memory then save it back to the file
+				INI_Editor.INI file = new INI_Editor.INI("settings.ini");
+
+				string str;
+				if (showCMD)
+					str = "true";
+				else
+					str = "false";
+
+				file.EditValue("Settings", "ShowCMD", str);
+				file.SaveAndClose();
+			}
+				else
+			{
+				//setting file does not yet exist, create it
+				INI_Editor.INI file = new INI_Editor.INI();
+
+				string str;
+				if (showCMD)
+					str = "true";
+				else
+					str = "false";
+
+				file.AddTree("Settings");
+				file.AddValue("Settings", "ShowCMD", str);
+				file.SaveTo("settings.ini");
+			} 
+		}
+
+		//loads settings file into memory
+		public static void LoadSettings()
+		{
+			if (File.Exists("settings.ini"))
+			{
+				INI_Editor.INI file = new INI_Editor.INI("settings.ini");
+				showCMD = file.GetValueAsBool("Settings", "ShowCMD");
+			}
 		}
 
 		//used to run mklink

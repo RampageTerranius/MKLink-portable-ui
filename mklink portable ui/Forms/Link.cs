@@ -15,6 +15,7 @@ namespace mklink_portable_ui
 		public frmLink()
 		{
 			InitializeComponent();
+			cboxShowCMD.Checked = Global.showCMD;
 		}
 
 		//cancels closing the program and sends control back to the menu
@@ -71,8 +72,6 @@ namespace mklink_portable_ui
 				Global.showCMD = true;	
 			else
 				Global.showCMD = false;
-
-
 		}
 	}
 }
