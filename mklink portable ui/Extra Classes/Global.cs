@@ -82,15 +82,15 @@ namespace mklink_portable_ui
 			switch(Global.mode)
 			{
 				case "DirSymLink":
-					type = " /D ";
+					type = "/d ";
 					break;
 
 				case "HardLink":
-					type = " /H ";
+					type = "/h ";
 					break;
 
 				case "DirJunk":
-					type = " /J ";
+					type = "/j ";
 					break;
 			}
 
@@ -101,7 +101,7 @@ namespace mklink_portable_ui
 			else
 				arg = "/c mklink ";
 
-			arg += type + location + " " + target;
+			arg += type +  "\"" +location + "\" \"" + target + "\"";
 			startInfo.Arguments = arg;  
 			process.StartInfo = startInfo;
 
