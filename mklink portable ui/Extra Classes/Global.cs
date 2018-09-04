@@ -167,7 +167,12 @@ namespace mklink_portable_ui
 				if (process.ExitCode == 0)
 				{
 					process.Close();
-					MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
+					string str = "Success!";
+					foreach (string s in output)					
+						if (s != "")
+							str += "\n" + s;
+					
+					MessageBox.Show(str, "Info", MessageBoxButtons.OK);
 				}
 					
 				else if (process.ExitCode == 1)
@@ -175,7 +180,9 @@ namespace mklink_portable_ui
 					process.Close();
 					string str = "Command Failed!";
 					foreach (string s in output)
-						str += "\n" + s;
+						if (s != "")
+							str += "\n" + s;
+
 					MessageBox.Show(str, "Info", MessageBoxButtons.OK);
 				}
 					
