@@ -18,11 +18,14 @@ namespace mklink_portable_ui
 
 		public static bool showCMD;
 
+		public static List<string> output;
+
 		public static void CreateForms()
 		{
 			gformMain = new frmMenu();
 			gformLink = new frmLink();
 			showCMD = true;
+			output = new List<string>();
 		}
 
 		//saving settings to ini as needed
@@ -70,12 +73,39 @@ namespace mklink_portable_ui
 			}
 		}
 
+		//used when not showing commands to get the output of the error
+		private static void processDataReceived(object sender, System.Diagnostics.DataReceivedEventArgs e)
+		{
+			System.Diagnostics.Process process = sender as System.Diagnostics.Process;
+
+			if (process != null)
+				output.Add(e.Data);
+		}
+
+		private static void clearDataReceived()
+		{
+			output = new List<string>();
+		}
+
+
 		//used to run mklink
 		public static void RunCMD(string location, string target)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
 			startInfo.FileName = "cmd.exe";//the process we will be starting
+
+			if (!showCMD)
+			{
+				startInfo.RedirectStandardOutput = true;
+				startInfo.RedirectStandardError = true;
+				startInfo.UseShellExecute = false;
+				startInfo.CreateNoWindow = true;
+
+				process.OutputDataReceived += processDataReceived;
+				process.ErrorDataReceived += processDataReceived;
+				clearDataReceived();
+			}
 
 			//preparing any extra parameters required for the process
 			string type = "";						
@@ -106,14 +136,19 @@ namespace mklink_portable_ui
 			process.StartInfo = startInfo;
 
 			if (showCMD)
-				process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-			
+				process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;			
 			else			
 				process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
 			
 				
 
 			process.Start();
+
+			if(!showCMD)
+			{
+				process.BeginOutputReadLine();
+				process.BeginErrorReadLine();
+			}
 
 			//wait until external process has exited
 			bool wait = true;
@@ -124,13 +159,26 @@ namespace mklink_portable_ui
 					wait = false;
 			}
 
+			
+
 			//show if process succeeded
 			if (!Global.showCMD)
 			{
 				if (process.ExitCode == 0)
+				{
+					process.Close();
 					MessageBox.Show("Success!", "Info", MessageBoxButtons.OK);
+				}
+					
 				else if (process.ExitCode == 1)
-					MessageBox.Show("Command Failed!", "Info", MessageBoxButtons.OK);
+				{
+					process.Close();
+					string str = "Command Failed!";
+					foreach (string s in output)
+						str += "\n" + s;
+					MessageBox.Show(str, "Info", MessageBoxButtons.OK);
+				}
+					
 			}
 		}
 	}
