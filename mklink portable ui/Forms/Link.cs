@@ -65,22 +65,15 @@ namespace mklink_portable_ui
 			this.Close();
 		}
 
-		private void cboxShowCMD_CheckedChanged(object sender, EventArgs e)
-		{
-			if (cboxShowCMD.Checked)			
-				Global.showCMD = true;	
-			else
-				Global.showCMD = false;
-		}
-
-		private void OnShown(object sender, EventArgs e)
-		{
-			cboxShowCMD.Checked = Global.showCMD;
-		}
-
 		private void frmLink_Load(object sender, EventArgs e)
 		{
 			Global.LoadSettings();
+		}
+
+		private void btnSettings_Click(object sender, EventArgs e)
+		{
+			Global.gformLink.Hide();
+			Global.gformSettings.Show();
 		}
 	}
 }

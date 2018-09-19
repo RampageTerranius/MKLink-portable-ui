@@ -15,8 +15,10 @@ namespace mklink_portable_ui
 
 		public static Form gformMain;
 		public static Form gformLink;
+		public static Form gformSettings;
 
 		public static bool showCMD;
+		public static bool checkIfTargetExists;
 
 		public static List<string> output;
 
@@ -24,7 +26,9 @@ namespace mklink_portable_ui
 		{
 			gformMain = new frmMenu();
 			gformLink = new frmLink();
+			gformSettings = new frmSettings();
 			showCMD = true;
+			checkIfTargetExists = true;
 			output = new List<string>();
 		}
 
@@ -37,6 +41,12 @@ namespace mklink_portable_ui
 				INI_Editor.INI file = new INI_Editor.INI("settings.ini");
 
 				file.EditValue("Settings", "ShowCMD", showCMD);
+				
+				//new setting, make sure to update settigns file for old users
+				if (file.ValueExists("Settings", "CheckIfTargetExists"))
+					file.EditValue("Settings", "CheckIfTargetExists", checkIfTargetExists);
+				else
+					file.AddValue("Settings", "CheckIfTargetExists", checkIfTargetExists);
 				file.SaveAndClose();
 			}
 				else
@@ -46,6 +56,7 @@ namespace mklink_portable_ui
 
 				file.AddTree("Settings");
 				file.AddValue("Settings", "ShowCMD", showCMD);
+				file.AddValue("Settings", "CheckIfTargetExists", checkIfTargetExists);
 				file.SaveTo("settings.ini");
 			} 
 		}
@@ -57,6 +68,8 @@ namespace mklink_portable_ui
 			{
 				INI_Editor.INI file = new INI_Editor.INI("settings.ini");
 				showCMD = file.GetValueAsBool("Settings", "ShowCMD");
+				if (file.ValueExists("Settings", "CheckIfTargetExists"))
+					checkIfTargetExists = file.GetValueAsBool("Settings", "ShowCMD");
 			}
 		}
 
@@ -74,14 +87,31 @@ namespace mklink_portable_ui
 			output = new List<string>();
 		}
 
+		private static bool CheckForExisting(string location)
+		{
+			if (!checkIfTargetExists)
+				return true;
+
+			return File.Exists(location);
+		}
+
 
 		//used to run mklink
 		public async static void RunCMD(string location, string target)
 		{
+			//check if the file exists (if we have the settign enabled)
+			if (!CheckForExisting(target))
+			{
+				MessageBox.Show("Command Failed!\n" +
+								"The Given file/path does not exist!", "Info", MessageBoxButtons.OK);
+				return;
+			}
+
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
 			startInfo.FileName = "cmd.exe";//the process we will be starting
 
+			//if not showing the CMD.exe box then we need to intercept all text to show in the success/failure box
 			if (!showCMD)
 			{
 				startInfo.RedirectStandardOutput = true;
