@@ -14,7 +14,7 @@ namespace mklink_portable_ui
 	{
 		public frmLink()
 		{
-			InitializeComponent();			
+			InitializeComponent();
 		}
 
 		//cancels closing the program and sends control back to the menu
@@ -76,6 +76,11 @@ namespace mklink_portable_ui
 		private void OnShown(object sender, EventArgs e)
 		{
 			cboxShowCMD.Checked = Global.showCMD;
+		}
+
+		private void frmLink_Load(object sender, EventArgs e)
+		{
+			Global.LoadSettings();
 		}
 	}
 }

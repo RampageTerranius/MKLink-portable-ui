@@ -133,6 +133,7 @@
 			this.ShowIcon = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
+			this.Load += new System.EventHandler(this.frmLink_Load);
 			this.Shown += new System.EventHandler(this.OnShown);
 			this.VisibleChanged += new System.EventHandler(this.OnVisibilityChange);
 			this.ResumeLayout(false);

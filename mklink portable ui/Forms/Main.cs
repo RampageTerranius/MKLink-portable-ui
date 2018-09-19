@@ -15,8 +15,7 @@ namespace mklink_portable_ui
 	{
 		public frmMenu()
 		{
-			InitializeComponent();
-			Global.LoadSettings();			
+			InitializeComponent();					
 		}
 
 		private void btnSymLink_Click(object sender, EventArgs e)

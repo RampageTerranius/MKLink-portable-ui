@@ -30,20 +30,13 @@ namespace mklink_portable_ui
 
 		//saving settings to ini as needed
 		public static void SaveSettings()
-		{
-			
+		{			
 			if (File.Exists("settings.ini"))
 			{
 				//setting file exists, load it to memory, edit the memory then save it back to the file
 				INI_Editor.INI file = new INI_Editor.INI("settings.ini");
 
-				string str;
-				if (showCMD)
-					str = "true";
-				else
-					str = "false";
-
-				file.EditValue("Settings", "ShowCMD", str);
+				file.EditValue("Settings", "ShowCMD", showCMD);
 				file.SaveAndClose();
 			}
 				else
@@ -51,14 +44,8 @@ namespace mklink_portable_ui
 				//setting file does not yet exist, create it
 				INI_Editor.INI file = new INI_Editor.INI();
 
-				string str;
-				if (showCMD)
-					str = "true";
-				else
-					str = "false";
-
 				file.AddTree("Settings");
-				file.AddValue("Settings", "ShowCMD", str);
+				file.AddValue("Settings", "ShowCMD", showCMD);
 				file.SaveTo("settings.ini");
 			} 
 		}
@@ -89,7 +76,7 @@ namespace mklink_portable_ui
 
 
 		//used to run mklink
-		public static void RunCMD(string location, string target)
+		public async static void RunCMD(string location, string target)
 		{
 			System.Diagnostics.Process process = new System.Diagnostics.Process();
 			System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
@@ -109,7 +96,7 @@ namespace mklink_portable_ui
 
 			//preparing any extra parameters required for the process
 			string type = "";						
-			switch(Global.mode)
+			switch(mode)
 			{
 				case "DirSymLink":
 					type = "/d ";
@@ -126,7 +113,7 @@ namespace mklink_portable_ui
 
 			string arg;
 
-			if (Global.showCMD)
+			if (showCMD)
 				arg = "/k mklink ";
 			else
 				arg = "/c mklink ";
@@ -144,26 +131,19 @@ namespace mklink_portable_ui
 
 			process.Start();
 
-			if(!showCMD)
-			{
-				process.BeginOutputReadLine();
-				process.BeginErrorReadLine();
-			}
-
-			//wait until external process has exited
-			bool wait = true;
-			while (wait)
-			{
-				System.Threading.Thread.Sleep(1000);
-				if (process.HasExited)
-					wait = false;
-			}
-
-			
 
 			//show if process succeeded
-			if (!Global.showCMD)
+			if (!showCMD)
 			{
+				//begin processing the data from the command line
+				process.BeginOutputReadLine();
+				process.BeginErrorReadLine();
+
+				//wait for the cmd to finish running
+				//with out this line program attempts to access data before the process has exited if NOT showing the command box
+				while (!process.HasExited)
+					await Task.Delay(1000);				
+
 				if (process.ExitCode == 0)
 				{
 					process.Close();
