@@ -32,6 +32,7 @@
 			this.btnDirSymLink = new System.Windows.Forms.Button();
 			this.btnHardLink = new System.Windows.Forms.Button();
 			this.btnDirJunk = new System.Windows.Forms.Button();
+			this.btnSettings = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btnSymLink
@@ -74,11 +75,22 @@
 			this.btnDirJunk.UseVisualStyleBackColor = true;
 			this.btnDirJunk.Click += new System.EventHandler(this.btnDirJunk_Click);
 			// 
+			// btnSettings
+			// 
+			this.btnSettings.Location = new System.Drawing.Point(12, 176);
+			this.btnSettings.Name = "btnSettings";
+			this.btnSettings.Size = new System.Drawing.Size(92, 35);
+			this.btnSettings.TabIndex = 4;
+			this.btnSettings.Text = "Settings";
+			this.btnSettings.UseVisualStyleBackColor = true;
+			this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+			// 
 			// frmMenu
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(116, 182);
+			this.ClientSize = new System.Drawing.Size(116, 223);
+			this.Controls.Add(this.btnSettings);
 			this.Controls.Add(this.btnDirJunk);
 			this.Controls.Add(this.btnHardLink);
 			this.Controls.Add(this.btnDirSymLink);
@@ -101,6 +113,7 @@
 		private System.Windows.Forms.Button btnDirSymLink;
 		private System.Windows.Forms.Button btnHardLink;
 		private System.Windows.Forms.Button btnDirJunk;
+		private System.Windows.Forms.Button btnSettings;
 	}
 }
 

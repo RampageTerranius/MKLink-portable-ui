@@ -65,18 +65,27 @@ namespace mklink_portable_ui
 			Global.SaveSettings();
 
 			//make sure the link form closes when we close the program as well
-			Global.gformLink.Close();		
+			Global.gformLink.Close();
 		}
 
 		private void frmMenu_Load(object sender, EventArgs e)
 		{
-			//checking if the user has administration rights 
+			//checking if the user has administration rights
 			using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
 			{
 				WindowsPrincipal principal = new WindowsPrincipal(identity);
 				if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
-					MessageBox.Show("This program may not function correctly without administrator rights!\nPlease change to an administrator account or make sure your current account has permission to create symbolic links.", "Warning", MessageBoxButtons.OK);
+					MessageBox.Show("This program may not function correctly without administrator rights!\n" +
+						            "Please change to an administrator account or make sure your current account has permission to create symbolic links."
+									, "Warning", MessageBoxButtons.OK);
 			}
+		}
+
+		private void btnSettings_Click(object sender, EventArgs e)
+		{
+			Global.gformMain.Hide();
+			Global.sender = Sender.MENU;
+			Global.gformSettings.Show();
 		}
 	}
 }

@@ -8,10 +8,17 @@ using System.IO;
 
 namespace mklink_portable_ui
 {
+	public enum Sender
+	{
+		MENU,
+		LINK
+	};
+
 	//used to store global variables and functions used between all forms
 	public static class Global
 	{
 		public static string mode = "";
+		public static Sender sender;
 
 		public static Form gformMain;
 		public static Form gformLink;
@@ -105,7 +112,7 @@ namespace mklink_portable_ui
 		//used to run mklink
 		public async static void RunCMD(string location, string target)
 		{
-			//check if the file exists (if we have the settign enabled)
+			//check if the file exists (if we have the setting enabled)
 			if (!CheckForExisting(target))
 			{
 				MessageBox.Show("Command Failed!\n" +

@@ -73,6 +73,7 @@ namespace mklink_portable_ui
 		private void btnSettings_Click(object sender, EventArgs e)
 		{
 			Global.gformLink.Hide();
+			Global.sender = Sender.LINK;
 			Global.gformSettings.Show();
 		}
 	}

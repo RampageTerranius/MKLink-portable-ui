@@ -31,13 +31,32 @@ namespace mklink_portable_ui
 
 			Global.SaveSettings();
 			Global.gformSettings.Hide();
-			Global.gformLink.Show();
+
+			switch (Global.sender)
+			{
+				case Sender.LINK:
+					Global.gformLink.Show();
+					break;
+
+				case Sender.MENU:
+					Global.gformMain.Show();
+					break;
+			}			
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			Global.gformSettings.Hide();
-			Global.gformLink.Show();
+			switch (Global.sender)
+			{
+				case Sender.LINK:
+					Global.gformLink.Show();
+					break;
+
+				case Sender.MENU:
+					Global.gformMain.Show();
+					break;
+			}
 		}
 
 		private void OnVisibleChanged(object sender, EventArgs e)
