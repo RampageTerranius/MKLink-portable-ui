@@ -92,7 +92,13 @@ namespace mklink_portable_ui
 			if (!checkIfTargetExists)
 				return true;
 
-			return File.Exists(location);
+			bool value = false;
+
+			if (File.Exists(location) || Directory.Exists(location))
+				value = true;
+			
+
+			return value;  
 		}
 
 
@@ -103,7 +109,8 @@ namespace mklink_portable_ui
 			if (!CheckForExisting(target))
 			{
 				MessageBox.Show("Command Failed!\n" +
-								"The Given file/path does not exist!", "Info", MessageBoxButtons.OK);
+								"The target does not exist!\n" +
+								"Check Target path or change Check If Target Exists in settings.", "Info", MessageBoxButtons.OK);
 				return;
 			}
 
